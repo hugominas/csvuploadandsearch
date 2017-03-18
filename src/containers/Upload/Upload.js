@@ -3,10 +3,15 @@ import {connect} from 'react-redux';
 import {createStructuredSelector} from 'reselect';
 import {FormGroup, ControlLabel, FormControl, HelpBlock, Button, Jumbotron, Grid, Row, Col} from 'react-bootstrap';
 
-import {uploadCSV} from './actions';
+import {selectUpload} from './selectors';
+import {uploadCSV, updateForm} from './actions';
 
 class Upload extends Component {
-    static propTypes = {};
+    static propTypes = {
+        selectUpload: PropTypes.object,
+        uploadCSV: PropTypes.func,
+        updateForm: PropTypes.func,
+    };
 
     constructor() {
         super(...arguments);
@@ -16,11 +21,17 @@ class Upload extends Component {
 
     }
 
-    handleChange() {
 
+    handleChange(name, value) {
+        const {uploadCSV, updateForm} = this.props;
+        updateForm(name, value);
+        if (name === 'fileUpload') {
+            uploadCSV(document.getElementById(name).files[0]);
+        }
     }
 
     render() {
+        const {selectUpload} = this.props
         return (
             <Grid>
                 <Row>
@@ -37,9 +48,10 @@ class Upload extends Component {
                                 <ControlLabel>Upload your CSV File</ControlLabel>
                                 <FormControl
                                     type="file"
-                                    value={''}
+                                    id="fileUpload"
+                                    value={selectUpload.fileUpload || ''}
                                     placeholder="Choose a file"
-                                    onChange={this.handleChange}
+                                    onChange={(e) => this.handleChange("fileUpload", e.target.value)}
                                 />
                                 <FormControl.Feedback />
                                 <HelpBlock>please choose a CSV file from your computer</HelpBlock>
@@ -61,9 +73,12 @@ class Upload extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-    //featureFlags: selectFeatureFlags,
+    selectUpload
 });
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+    updateForm,
+    uploadCSV
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Upload);

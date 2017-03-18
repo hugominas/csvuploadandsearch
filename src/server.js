@@ -1,13 +1,13 @@
-import babelPolyfill from "babel-polyfill";
-import { Server } from "hapi";
+import {Server} from "hapi";
+import fs from "fs-extra";
 import h2o2 from "h2o2";
 import inert from "inert";
 import React from "react";
 import ReactDOM from "react-dom/server";
-import { RouterContext, match } from "react-router";
+import {RouterContext, match} from "react-router";
 import configureStore from "./store.js";
 import RadiumContainer from './containers/RadiumContainer';
-import { Provider } from 'react-redux';
+import {Provider} from 'react-redux';
 import routesContainer from "./routes";
 import url from "url";
 let routes = routesContainer;
@@ -21,7 +21,7 @@ const initialState = store.getState();
  * Start Hapi server
  */
 var envset = {
-  production: process.env.NODE_ENV === 'production'
+    production: process.env.NODE_ENV === 'production'
 };
 
 const hostname = envset.production ? (process.env.HOSTNAME || process['env'].HOSTNAME) : "localhost";
@@ -31,84 +31,130 @@ const server = new Server();
 server.connection({host: hostname, port: port});
 
 server.register(
-	[
-		h2o2,
-		inert,
-		// WebpackPlugin
-	],
-	(err) => {
-	if (err) {
-		throw err;
-	}
+    [
+        h2o2,
+        inert,
+        // WebpackPlugin
+    ],
+    (err) => {
+        if (err) {
+            throw err;
+        }
 
-	server.start(() => {
-		console.info("==> ✅  Server is listening");
-		console.info("==> 🌎  Go to " + server.info.uri.toLowerCase());
-	});
-});
+        server.start(() => {
+            console.info("==> ✅  Server is listening");
+            console.info("==> 🌎  Go to " + server.info.uri.toLowerCase());
+        });
+    });
 
 /**
  * Attempt to serve static requests from the public folder.
  */
 server.route({
-	method:  "GET",
-	path:    "/{params*}",
-	handler: {
-		file: (request) => "static" + request.path
-	}
+    method: "GET",
+    path: "/{params*}",
+    handler: {
+        file: (request) => "static" + request.path
+    }
 });
 
+/**
+ * Upload file to server
+ */
+server.route({
+    method: "PUT",
+    path: "/upload",
+    config: {
+        payload: {
+            output: 'stream'
+        }
+    },
+    handler: function (request, reply) {
+        // This is the directory you wish to place the files.
+        const uploadDir = './uploads/';
+        // Create stream where the files will go.
+        const writeStream = fs.createWriteStream(uploadDir + request.payload.file.hapi.filename);
+
+        // Pipe the payload file into the write stream.
+        request.payload.file.pipe(writeStream);
+
+        // On stream end or error send a response.
+        request.payload.file.on('end', function () {
+            reply({"Status": "Done", "File": newFileName});
+        }).on('error', function (e) {
+            reply(e);
+        });
+
+    }
+});
+
+/**
+ * Upload file to server
+ */
+server.route({
+        method: "PUT",
+        path: "/getData/{amount}",
+        config: {
+            payload: {
+                output: 'stream'
+            }
+        },
+        handler: function (request, reply) {
+
+        }
+    }
+)
 /**
  * Endpoint that proxies all GitHub API requests to https://api.github.com.
  */
 server.route({
-	method: "GET",
-	path: "/api/github/{path*}",
-	handler: {
-		proxy: {
-			passThrough: true,
-			mapUri (request, callback) {
-				callback(null, url.format({
-					protocol: "https",
-					host:     "api.github.com",
-					pathname: request.params.path,
-					query:    request.query
-				}));
-			},
-			onResponse (err, res, request, reply, settings, ttl) {
-				reply(res);
-			}
-		}
-	}
+    method: "GET",
+    path: "/api/github/{path*}",
+    handler: {
+        proxy: {
+            passThrough: true,
+            mapUri (request, callback) {
+                callback(null, url.format({
+                    protocol: "https",
+                    host: "api.github.com",
+                    pathname: request.params.path,
+                    query: request.query
+                }));
+            },
+            onResponse (err, res, request, reply, settings, ttl) {
+                reply(res);
+            }
+        }
+    }
 });
 
 /**
  * Catch dynamic requests here to fire-up React Router.
  */
 server.ext("onPreResponse", (request, reply) => {
-	if (typeof request.response.statusCode !== "undefined") {
-    return reply.continue();
-  }
+    if (typeof request.response.statusCode !== "undefined") {
+        return reply.continue();
+    }
 
-  match({routes, location: request.path}, (error, redirectLocation, renderProps) => {
-    if (redirectLocation) {
-      reply.redirect(redirectLocation.pathname + redirectLocation.search);
-      return;
-    }
-    if (error || !renderProps) {
-      reply.continue();
-      return;
-    }
-	const reactString = ReactDOM.renderToString(
-		<Provider store={store}>
-			<RadiumContainer radiumConfig={{userAgent: request.headers['user-agent']}}>
-				<RouterContext {...renderProps} />
-			</RadiumContainer>
-		</Provider>
-	);
-	const webserver = __PRODUCTION__ ? "" : `//${hostname}:8080`;
-	let output = (
-		`<!doctype html>
+    match({routes, location: request.path}, (error, redirectLocation, renderProps) => {
+        if (redirectLocation) {
+            reply.redirect(redirectLocation.pathname + redirectLocation.search);
+            return;
+        }
+        if (error || !renderProps) {
+            reply.continue();
+            return;
+        }
+        const reactString = ReactDOM.renderToString(
+            <Provider store={store}>
+                <RadiumContainer radiumConfig={{userAgent: request.headers['user-agent']}}>
+                    <RouterContext {...renderProps} />
+                </RadiumContainer>
+            </Provider>
+        );
+        const webserver = __PRODUCTION__ ? "" : `//${hostname}:8080`;
+        let output = (
+            `<!doctype html>
 		<html lang="en-us">
 			<head>
 				<meta charset="utf-8">
@@ -126,23 +172,23 @@ server.ext("onPreResponse", (request, reply) => {
 				<script src=${webserver}/dist/client.js></script>
 			</body>
 		</html>`
-		);
-	reply(output);
-  });
+        );
+        reply(output);
+    });
 });
 
 if (__DEV__) {
-	if (module.hot) {
-		console.log("[HMR] Waiting for server-side updates");
+    if (module.hot) {
+        console.log("[HMR] Waiting for server-side updates");
 
-		module.hot.accept("./routes", () => {
-			routes = require("./routes");
-		});
+        module.hot.accept("./routes", () => {
+            routes = require("./routes");
+        });
 
-		module.hot.addStatusHandler((status) => {
-			if (status === "abort") {
-				setTimeout(() => process.exit(0), 0);
-			}
-		});
-	}
+        module.hot.addStatusHandler((status) => {
+            if (status === "abort") {
+                setTimeout(() => process.exit(0), 0);
+            }
+        });
+    }
 }
