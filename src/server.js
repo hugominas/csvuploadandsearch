@@ -1,12 +1,12 @@
-import { Server } from 'hapi';
+import {Server} from 'hapi';
 import h2o2 from 'h2o2';
 import inert from 'inert';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
-import { RouterContext, match } from 'react-router';
+import {RouterContext, match} from 'react-router';
 import configureStore from './store.js';
 import RadiumContainer from './containers/RadiumContainer';
-import { Provider } from 'react-redux';
+import {Provider} from 'react-redux';
 import routesContainer from './routes';
 import serveRoutes from '../server/routes';
 
@@ -21,58 +21,58 @@ const initialState = store.getState();
  * Start Hapi server
  */
 var envset = {
-	production: process.env.NODE_ENV === 'production',
+    production: process.env.NODE_ENV === 'production',
 };
 const hostname = envset.production ? (process.env.HOSTNAME || process['env'].HOSTNAME) : 'localhost';
 var port = envset.production ? (process.env.PORT || process['env'].PORT) : 8000;
 const server = new Server();
 
-server.connection({ host: hostname, port: port });
+server.connection({host: hostname, port: port});
 
 server.register(
-	[
-		h2o2,
-		inert,
+    [
+        h2o2,
+        inert,
         // WebpackPlugin
-	],
+    ],
     (err) => {
-	if (err) {
-		throw err;
-	}
+        if (err) {
+            throw err;
+        }
 
-	server.start(() => {
-		console.info('==> ✅  Server is listening');
-		console.info('==> 🌎  Go to ' + server.info.uri.toLowerCase());
-	});
-});
+        server.start(() => {
+            console.info('==> ✅  Server is listening');
+            console.info('==> 🌎  Go to ' + server.info.uri.toLowerCase());
+        });
+    });
 server.route(serveRoutes);
 
 /**
  * Catch dynamic requests here to fire-up React Router.
  */
 server.ext('onPreResponse', (request, reply) => {
-	if (typeof request.response.statusCode !== 'undefined') {
-		return reply.continue();
-	}
+    if (typeof request.response.statusCode !== 'undefined') {
+        return reply.continue();
+    }
 
-	match({ routes, location: request.path }, (error, redirectLocation, renderProps) => {
-		if (redirectLocation) {
-			reply.redirect(redirectLocation.pathname + redirectLocation.search);
-			return;
-		}
-		if (error || !renderProps) {
-			reply.continue();
-			return;
-		}
-		const reactString = ReactDOM.renderToString(
-			<Provider store={store}>
-				<RadiumContainer radiumConfig={{ userAgent: request.headers['user-agent'] }}>
-					<RouterContext {...renderProps} />
-				</RadiumContainer>
-			</Provider>
+    match({routes, location: request.path}, (error, redirectLocation, renderProps) => {
+        if (redirectLocation) {
+            reply.redirect(redirectLocation.pathname + redirectLocation.search);
+            return;
+        }
+        if (error || !renderProps) {
+            reply.continue();
+            return;
+        }
+        const reactString = ReactDOM.renderToString(
+            <Provider store={store}>
+                <RadiumContainer radiumConfig={{userAgent: request.headers['user-agent']}}>
+                    <RouterContext {...renderProps} />
+                </RadiumContainer>
+            </Provider>
         );
-		const webserver = process.env.NODE_ENV === 'production' ? '' : `//${hostname}:8080`;
-		const output = (
+        const webserver = process.env.NODE_ENV === 'production' ? '' : `//${hostname}:8080`;
+        const output = (
             `<!doctype html>
 		<html lang="en-us">
 			<head>
@@ -92,22 +92,24 @@ server.ext('onPreResponse', (request, reply) => {
 			</body>
 		</html>`
         );
-		reply(output);
-	});
+        reply(output);
+    });
 });
 
 if (__DEV__) {
-	if (module.hot) {
-		console.log('[HMR] Waiting for server-side updates');
+    if (module.hot) {
+        console.log('[HMR] Waiting for server-side updates');
 
-		module.hot.accept('./routes', () => {
-			routes = require('./routes');
-		});
+        module.hot.accept('./routes', () => {
+            routes = require('./routes');
+        });
 
-		module.hot.addStatusHandler((status) => {
-			if (status === 'abort') {
-				setTimeout(() => process.exit(0), 0);
-			}
-		});
-	}
+        module.hot.addStatusHandler((status) => {
+            if (status === 'abort') {
+                setTimeout(() => process.exit(0), 0);
+            }
+        });
+    }
 }
+
+module.exports = server;

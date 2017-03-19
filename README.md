@@ -1,22 +1,22 @@
 ## Features
 
-- [ x ] React Hapi environment bootstrap (hapi-universal-redux)
-- [ x ] Client React / Redux / Saga 
-- [ x ] bootstrap Container
-- [ x ] Upload Container
-- [ x ] Upload file Saga / axios Handler
-- [ x ] Upload Progress
-- [ x ] Server side Upload Handler
-- [ x ] Server side Upload file write
-- [ x ] Server side Upload big file size
-- [ x ] Server side file search route
-- [   ] Server side file keyword filter
-- [   ] Client side display search suggestions
-- [   ] Client side display search results
-- [   ] Container test
-- [   ] Upload test
-- [   ] Application test
-- [   ] nitwatch integration test
+- [x] React Hapi environment bootstrap (hapi-universal-redux)
+- [x] Client React / Redux / Saga 
+- [x] bootstrap Container
+- [x] Upload Container
+- [x] Upload file Saga / axios Handler
+- [x] Upload Progress
+- [x] Server side Upload Handler
+- [x] Server side Upload file write
+- [x] Server side Upload big file size
+- [x] Server side file search route
+- [x] Server side file keyword filter
+- [x] Client side display search suggestions
+- [x] Client side display search results
+- [ ] Container test Jest
+- [ ] Upload test Mocha / Chai
+- [ ] Application test  Mocha / Chai
+- [ ] integration test nigthwatch
 
 
 
