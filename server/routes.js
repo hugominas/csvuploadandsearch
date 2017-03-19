@@ -21,8 +21,8 @@ export default [{
     },
     handler: upload
 }, {
-    method: 'GET',
-    path: '/getData/{filename}/{amount?}',
+    method: 'POST',
+    path: '/search/',
     handler: search
 }, {
     method: 'GET',
