@@ -46,7 +46,7 @@ class Upload extends Component {
                     <ListGroupItem
                         id={`result-${person.id}`}
                         style={selectUpload.selected === person.id
-                            ? {borderLeft: `10px solid ${person.colour.toLowerCase()}`}
+                            ? {borderLeft: `10px solid ${person.team.toLowerCase()}`}
                             : {}}>
                         {person.name}
                         <button bsStyle='primary' onClick={() => this.handleChange('selected', person.id)}
@@ -55,8 +55,8 @@ class Upload extends Component {
                         </button>
                         <div className={selectUpload.selected === person.id ? 'show' : 'hide'}>
                             <span><strong>Age:</strong> {person.age}</span>
-                            <span> | <strong>Address:</strong> {person.age}</span>
-                            <span> | <strong>Colour:</strong> {person.colour}</span>
+                            <span> | <strong>Address:</strong> {person.address}</span>
+                            <span> | <strong>Team:</strong> {person.team}</span>
                         </div>
                     </ListGroupItem>
                 );
