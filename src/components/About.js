@@ -12,8 +12,8 @@ export default ({ styles }) => (
 		<h3>Redux DevTools</h3>
 		<p>
 			To start managing your state create new constants, actions and reducers.
-			Install <a href="https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en"><span style={styles.feature}>Redux DevTools Extension for Chrome</span></a> if you haven't already,
+			Install <a href='https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en'><span style={styles.feature}>Redux DevTools Extension for Chrome</span></a> if you haven't already,
 			and use it to debug you're app's state.
 		</p>
 	</div>
-)
+);

@@ -1,18 +1,40 @@
 {
-  "extends": "eslint-config-airbnb",
-  "ecmaFeatures": {
-    globalReturn: true
+  "parser"  : "babel-eslint",
+  "extends" : [
+    "standard",
+    "standard-react"
+  ],
+  "plugins": [
+    "babel",
+    "react",
+    "promise"
+  ],
+  "env"     : {
+    "browser" : true
+  },
+  "globals" : {
+    "TL"           : false,
+    "__DEV__"      : false,
+    "__PROD__"     : false,
+    "__DEBUG__"    : false,
+    "__COVERAGE__" : false,
+    "__BASENAME__" : false
   },
   "rules": {
-    // Temporarily disabled due to a possible bug in babel-eslint (todomvc example)
-    "block-scoped-var": 0,
-    "no-console": 0,
-    // Temporarily disabled for test/* until babel/babel-eslint#33 is resolved
-    "padded-blocks": 0,
-    "space-before-function-paren": [2, { "anonymous": "always", "named": "never" }]
-  },
-  "globals": {
-    "__CLIENT__": true,
-    "__SERVER__": true
+    "key-spacing"                  : 0,
+    "array-bracket-spacing"        : [2, "always"],
+    "semi"                         : [2, "always"],
+    "prefer-const"                 : ["error", { "destructuring": "any", "ignoreReadBeforeAssign": false }],
+    "curly"                        : [2, "all"],
+    "brace-style"                  : [2, "1tbs", {}],
+    "generator-star-spacing"       : 1,
+    "jsx-quotes"                   : [2, "prefer-single"],
+    "max-len"                      : [2, 120, 2],
+    "object-curly-spacing"         : [2, "always"],
+    "no-tabs"                      : 0,
+    "comma-dangle"                 : ["warn", "always-multiline"],
+    "indent"                       : ["error", "tab", { "SwitchCase": 1 }],
+    "react/jsx-indent"             : [2, "tab"],
+    "react/jsx-indent-props"       : [2, "tab"]
   }
 }

@@ -9,7 +9,7 @@ module.exports = {
 	context: __dirname,
 	debug:   false,
 	devtool: "source-map",
-	entry:   ["../src/server"],
+	entry:   ['babel-polyfill', "../src/server"],
 	output:  {
 		path:          path.join(__dirname, "../dist"),
 		filename:      "server.js"
