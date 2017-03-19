@@ -9,6 +9,7 @@ import {uploadCSV, updateForm, searchText} from './actions';
 class Upload extends Component {
     static propTypes = {
         selectUpload: PropTypes.object,
+        autocomplete: PropTypes.object,
         uploadCSV: PropTypes.func,
         updateForm: PropTypes.func,
         searchText: PropTypes.func,
@@ -20,8 +21,9 @@ class Upload extends Component {
 
     }
 
-    getValidationState() {
-
+    _getAutocompleteData() {
+        const {autocomplete} = this.props;
+        return (autocomplete) ? autocomplete : '';
     }
 
     handleChange(name, value) {
@@ -72,10 +74,12 @@ class Upload extends Component {
                             ? <FormGroup>
                                 <FormControl
                                     type='text'
+                                    id="searchField"
                                     value={selectUpload.searchText || ''}
                                     placeholder='Search data'
                                     onChange={(e) => this.handleChange('searchText', e.target.value)}
                                 />
+                                {this._getAutocompleteData()}
                                 <FormControl.Feedback />
                                 <HelpBlock>please type your search</HelpBlock>
                             </FormGroup>

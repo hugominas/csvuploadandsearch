@@ -23,7 +23,6 @@ const initialState = store.getState();
 var envset = {
 	production: process.env.NODE_ENV === 'production',
 };
-
 const hostname = envset.production ? (process.env.HOSTNAME || process['env'].HOSTNAME) : 'localhost';
 var port = envset.production ? (process.env.PORT || process['env'].PORT) : 8000;
 const server = new Server();

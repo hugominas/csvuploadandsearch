@@ -1,7 +1,9 @@
 import {takeEvery, fork, call, put, select} from 'redux-saga/effects';
 import axios from 'axios';
 import {UPLOAD_FORM, SEARCH_TEXT_REQUEST} from './constants';
-import {uploadCSVSuccessfull} from './actions';
+import {uploadCSVSuccessfull, searchSuccessful} from './actions';
+import {selectDataFileName} from './selectors';
+
 
 export function * uploadFormFlow({payload, meta}) {
     try {
@@ -32,18 +34,20 @@ export function * uploadFormFlowWatcher() {
 
 export function * searchTextFlow({payload, meta}) {
     try {
+        const dataFileName = yield select(selectDataFileName);
 
         const config = {
-            method: 'GET',
-            url: `/getData/${encodeURIComponent(payload)}/20`
+            method: 'POST',
+            url: `/search/`,
+            data: {
+                query: `${encodeURIComponent(payload)}`
+            }
         };
 
         const result = yield call(axios, config);
-        console.log(result);
-        //yield put(uploadCSVSuccessfull(result.data));
+        yield put(searchSuccessful(result.data.results));
     } catch (error) {
         console.log(error);
-        // console.log(routingLoadError(error));
     }
 }
 
