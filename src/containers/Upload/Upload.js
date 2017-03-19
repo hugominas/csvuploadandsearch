@@ -30,7 +30,7 @@ class Upload extends Component {
 
         switch (name) {
             case 'fileUpload':
-                uploadCSV(document.getElementById(name).files[0]);
+                uploadCSV(document.getElementById('uploadField').files[0]);
                 break;
             case 'searchText':
                 this.searchText(value);
@@ -49,13 +49,13 @@ class Upload extends Component {
                             <h3>First Upload your CSV</h3>
                         </Col>
                         <Col xs={4} md={4}>
-                            <FormGroup
-                                validationState={this.getValidationState()}>
+                            <FormGroup>
                                 <ControlLabel>Upload your CSV File</ControlLabel>
                                 <FormControl
                                     type='file'
-                                    id='fileUpload'
+                                    id='uploadField'
                                     value={selectUpload.fileUpload || ''}
+                                    accept=".csv"
                                     placeholder='Choose a file'
                                     onChange={(e) => this.handleChange('fileUpload', e.target.value)}
                                 />

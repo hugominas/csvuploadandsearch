@@ -10,7 +10,7 @@ export function * uploadFormFlow({payload, meta}) {
 
         const config = {
             method: 'PUT',
-            url: '/upload',
+            url: '/import',
             data,
             onUploadProgress: (progressEvent) => {
                 let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
