@@ -7,7 +7,6 @@ const selectDataFileName = createSelector(
     formState => formState.requestFile
 );
 
-
 export {
     selectUpload,
     selectDataFileName,

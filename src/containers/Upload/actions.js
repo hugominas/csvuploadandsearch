@@ -5,7 +5,7 @@ import {
     UPLOAD_FORM,
     UPLOAD_FORM_SUCCESSFUL,
     SEARCH_TEXT_REQUEST,
-    SEARCH_TEXT_SUCCESSFUL
+    SEARCH_TEXT_SUCCESSFUL,
 } from './constants';
 
 export const updateForm = createAction(UPDATE_FORM, (name, value) => ({ name, value }));
