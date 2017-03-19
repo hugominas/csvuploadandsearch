@@ -30,7 +30,7 @@ Make sure you're using Node >= 4.0.0.
 	cd CSVimportsearch
 
 	npm install
-	npm run dev     # start Hapi server and webpack-dev-server hot server
+	npm run start
 
 	# production build and run
 	npm run production
