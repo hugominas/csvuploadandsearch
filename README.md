@@ -27,10 +27,10 @@ Make sure you're using Node >= 4.0.0.
 
 ```bash
 	git clone https://github.com/hugominas/csvuploadandsearch.git
-	cd CSVimportsearch
+	cd csvuploadandsearch
 
 	npm install
-	npm run start
+	npm start
 
 	# production build and run
 	npm run production
