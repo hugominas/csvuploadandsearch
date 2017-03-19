@@ -44,6 +44,7 @@ class Upload extends Component {
             return selectUpload.requestData.map(person => {
                 return (
                     <ListGroupItem
+                        id={`result-${person.id}`}
                         style={selectUpload.selected === person.id
                             ? {borderLeft: `10px solid ${person.colour.toLowerCase()}`}
                             : {}}>
