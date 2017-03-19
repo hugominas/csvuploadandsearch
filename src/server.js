@@ -46,7 +46,6 @@ server.register(
 		console.info('==> 🌎  Go to ' + server.info.uri.toLowerCase());
 	});
 });
-console.log(serveRoutes);
 server.route(serveRoutes);
 
 /**

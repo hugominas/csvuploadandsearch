@@ -57,6 +57,7 @@
     "immutable": "^3.8.1",
     "inert": "^4.0.2",
     "isomorphic-fetch": "^2.2.1",
+    "lodash": "^4.17.4",
     "material-ui": "^0.17.1",
     "piping": "1.0.0-rc.4",
     "radium": "^0.18.1",

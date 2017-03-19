@@ -1,5 +1,6 @@
-import fs from 'fs-extra';
 import url from 'url';
+import search from './controlers/search';
+import upload from './controlers/upload';
 /**
  * Attempt to serve static requests from the public folder.
  */
@@ -17,33 +18,11 @@ export default [ {
 			output: 'stream',
 		},
 	},
-	handler: function (request, reply) {
-        // This is the directory you wish to place the files.
-		const uploadDir = './uploads/';
-        // Create stream where the files will go.
-		const writeStream = fs.createWriteStream(uploadDir + request.payload.file.hapi.filename);
-
-        // Pipe the payload file into the write stream.
-		request.payload.file.pipe(writeStream);
-
-        // On stream end or error send a response.
-		request.payload.file.on('end', function () {
-			reply({ 'Status': 'Done' });
-		}).on('error', function (e) {
-			reply(e);
-		});
-	},
+	handler: upload
 }, {
-	method: 'PUT',
-	path: '/getData/{amount}',
-	config: {
-		payload: {
-			output: 'stream',
-		},
-	},
-	handler: function (request, reply) {
-
-	},
+	method: 'GET',
+	path: '/getData/{filename}/{amount?}',
+	handler: search
 }, {
 	method: 'GET',
 	path: '/api/github/{path*}',
