@@ -31,7 +31,11 @@ Make sure you're using Node >= 4.0.0.
 
 	npm install
 	npm start
-
+	
+	... wait for the message on build is complete
+	==> ✅  Server is listening
+	==> 🌎  Go to ....
+	
 	# production build and run
 	npm run production
 	# or
