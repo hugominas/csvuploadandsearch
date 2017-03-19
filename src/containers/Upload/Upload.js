@@ -1,7 +1,20 @@
 import React, {PropTypes, Component} from 'react';
 import {connect} from 'react-redux';
 import {createStructuredSelector} from 'reselect';
-import {FormGroup, ControlLabel, FormControl, HelpBlock, Button, Jumbotron, Grid, Row, Col} from 'react-bootstrap';
+import {
+    FormGroup,
+    ControlLabel,
+    FormControl,
+    HelpBlock,
+    Button,
+    Jumbotron,
+    Grid,
+    Row,
+    Col,
+    ListGroup,
+    ListGroupItem
+} from 'react-bootstrap';
+
 import {debounce} from 'lodash';
 import {selectUpload} from './selectors';
 import {uploadCSV, updateForm, searchText} from './actions';
@@ -24,6 +37,33 @@ class Upload extends Component {
     _getAutocompleteData() {
         const {autocomplete} = this.props;
         return (autocomplete) ? autocomplete : '';
+    }
+
+    _onDisplaySearchData() {
+        const {selectUpload} = this.props;
+        if (selectUpload.uploaded && selectUpload.requestData) {
+            return selectUpload.requestData.map(person => {
+                return (
+                    <ListGroupItem
+                        style={selectUpload.selected === person.id
+                            ? {borderLeft: `10px solid ${person.colour.toLowerCase()}`}
+                            : {}}>
+                        {person.name}
+                        <button bsStyle="primary" onClick={() => this.handleChange('selected', person.id)}
+                                className={selectUpload.selected !== person.id ? 'show pull-right' : 'hide pull-right'}>
+                            select
+                        </button>
+                        <div className={selectUpload.selected === person.id ? 'show' : 'hide'}>
+                            <span><strong>Age:</strong> {person.age}</span>
+                            <span> | <strong>Address:</strong> {person.age}</span>
+                            <span> | <strong>Colour:</strong> {person.colour}</span>
+                        </div>
+                    </ListGroupItem>
+                )
+            })
+        } else {
+            return '';
+        }
     }
 
     handleChange(name, value) {
@@ -86,6 +126,16 @@ class Upload extends Component {
                             : ''}
                     </Col>
                 </Row>
+
+                <Row className='show-grid'>
+                    <Col xs={12} md={12}>
+                        <ListGroup>
+                            {this._onDisplaySearchData()}
+                        </ListGroup>
+                    </Col>
+                </Row>
+
+
             </Grid>
 
         );

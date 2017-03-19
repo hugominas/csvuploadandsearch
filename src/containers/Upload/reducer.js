@@ -17,11 +17,9 @@ export default function uploadReducer(state = initialState, action) {
         case UPLOAD_FORM:
             return state;
         case SEARCH_TEXT_SUCCESSFUL:
-            console.log(action);
-
-            return {...state, requestData: action.payload.filename};
+            return {...state, requestData: action.payload};
         case UPLOAD_FORM_SUCCESSFUL:
-            return {...state, requestFile: action.payload, uploaded: true};
+            return {...state, requestFile: action.payload.filename, uploaded: true};
         default:
             return state;
     }

@@ -7,13 +7,8 @@ const selectDataFileName = createSelector(
     formState => formState.requestFile
 );
 
-const selectPersonData = createSelector(
-    [ selectUpload ],
-    formState => formState.requestData
-);
 
 export {
     selectUpload,
     selectDataFileName,
-    selectPersonData,
 };
