@@ -45,7 +45,7 @@ Make sure you're using Node >= 4.0.0.
 	NODE_ENV=production npm run start
 	
 	# test jest
-	npm test
+	npm run test
 ```
 
 
