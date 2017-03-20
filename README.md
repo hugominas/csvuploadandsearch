@@ -13,9 +13,11 @@
 - [x] Server side file keyword filter
 - [x] Client side display search suggestions
 - [x] Client side display search results
-- [ ] Container test Jest
+- [x] Container test Jest
+- [x] Reducer test Jest
+- [x] Saga test Jest
+- [x] Selector test Jest
 - [ ] Upload test Mocha / Chai
-- [ ] Application test  Mocha / Chai
 - [ ] integration test nigthwatch
 
 
