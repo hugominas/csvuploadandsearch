@@ -23,7 +23,7 @@
   "main": "dist/server.js",
   "scripts": {
     "start": "npm run build && npm run forever",
-    "test": "mocha --compilers js:babel-register",
+    "test": "jest --config tests/.jestrc --watch",
     "watch": "mocha --compilers js:babel-register -w -b",
     "forever": "forever --minUptime 1000 --spinSleepTime 1000 -c \"node --harmony\" ./dist/server.js",
     "build-server": "webpack --colors --display-error-details --config configs/webpack.server.js",
@@ -84,6 +84,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",
+    "babel-jest": "^19.0.0",
     "eslint": "^3.18.0",
     "eslint-config-airbnb": "^13.0.0",
     "eslint-config-standard": "^7.1.0",
@@ -92,8 +93,14 @@
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-react": "^6.5.0",
     "eslint-plugin-standard": "^2.1.1",
+    "jest": "^19.0.2",
+    "jest-immutable-matchers": "^1.4.0",
     "json-loader": "^0.5.4",
     "just-wait": "1.0.9",
+    "react-addons-test-utils": "^15.4.2",
+    "react-test-renderer": "^15.4.2",
+    "redux-saga-test-plan": "^2.2.1",
+    "regenerator-runtime": "^0.10.3",
     "webpack-dev-server": "^1.16.2"
   },
   "engines": {

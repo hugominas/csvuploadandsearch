@@ -5,7 +5,7 @@ import {
     SEARCH_TEXT_SUCCESSFUL,
 } from './constants';
 
-const initialState = {
+export const initialState = {
 	isLoading: false,
 	uploaded: false,
 };

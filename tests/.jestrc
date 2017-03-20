@@ -1,0 +1,25 @@
+{
+  "rootDir" : "../",
+  "testMatch" : [ "**/tests/**/?(*.)(spec|test).js?(x)" ],
+  "modulePaths": [
+    "<rootDir>/src",
+    "<rootDir>/node_modules"
+  ],
+  "coveragePathIgnorePatterns": [
+    "<rootDir>/node_modules/"
+  ],
+  "moduleFileExtensions": [
+    "js",
+    "jsx",
+    "json"
+  ],
+  "moduleNameMapper": {
+    "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
+    "<rootDir>/tests/client/__mocks__/fileMock.js",
+    "\\.(css|scss)$": "identity-obj-proxy"
+  },
+  "setupTestFrameworkScriptFile": "<rootDir>/tests/__setup__.js",
+  "globals" : {
+    "__DEBUG__" : false
+  }
+}
