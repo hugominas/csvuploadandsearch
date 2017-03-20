@@ -8,11 +8,11 @@
 - [x] Upload Progress
 - [x] Server side Upload Handler
 - [x] Server side Upload file write
+- [x] Server side CSV Upload convert to Json
 - [x] Server side Upload big file size
 - [x] Server side file search route
 - [x] Server side file keyword filter
 - [x] Client side display search suggestions
-- [x] Client side display search results
 - [x] Container test Jest
 - [x] Reducer test Jest
 - [x] Saga test Jest
@@ -43,6 +43,9 @@ Make sure you're using Node >= 4.0.0.
 	# or
 	NODE_ENV=production npm run build
 	NODE_ENV=production npm run start
+	
+	# test jest
+	npm test
 ```
 
 
