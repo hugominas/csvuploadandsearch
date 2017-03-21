@@ -11,7 +11,7 @@ export default [ {
 		file: (request) => 'static' + request.path,
 	},
 }, {
-	method: 'PUT',
+	method: 'POST',
 	path: '/import',
 	config: {
 		payload: {
