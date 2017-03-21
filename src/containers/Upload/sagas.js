@@ -10,7 +10,7 @@ export function * uploadFormFlow ({ payload, meta }) {
 		data.append('file', payload.file);
 
 		const config = {
-			method: 'PUT',
+			method: 'POST',
 			url: '/import',
 			data,
 			onUploadProgress: (progressEvent) => {
