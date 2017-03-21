@@ -17,7 +17,7 @@
 - [x] Reducer test Jest
 - [x] Saga test Jest
 - [x] Selector test Jest
-- [ ] Upload test Mocha / Chai
+- [x] Upload test Chai
 - [ ] integration test nigthwatch
 
 
@@ -46,6 +46,9 @@ Make sure you're using Node >= 4.0.0.
 	
 	# test jest
 	npm run test
+	
+	# server routes test mocha
+    npm run test:server
 ```
 
 
