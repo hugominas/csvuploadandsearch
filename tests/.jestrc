@@ -1,6 +1,6 @@
 {
   "rootDir" : "../",
-  "testMatch" : [ "**/tests/**/?(*.)(spec|test).js?(x)" ],
+  "testMatch" : [ "**/tests/**/?(*.)(jest|test).js?(x)" ],
   "modulePaths": [
     "<rootDir>/src",
     "<rootDir>/node_modules"
