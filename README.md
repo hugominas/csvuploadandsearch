@@ -48,7 +48,7 @@ Make sure you're using Node >= 4.0.0.
 	npm run test
 	
 	# server routes test mocha
-    npm run test:server
+	npm run test:server
 ```
 
 
