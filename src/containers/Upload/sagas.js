@@ -33,11 +33,9 @@ export function * uploadFormFlowWatcher () {
 
 export function * searchTextFlow ({ payload, meta }) {
 	try {
-		const dataFileName = yield select(selectDataFileName);
-
 		const config = {
 			method: 'POST',
-			url: `/search/`,
+			url: `/search`,
 			data: {
 				query: `${encodeURIComponent(payload)}`,
 			},
